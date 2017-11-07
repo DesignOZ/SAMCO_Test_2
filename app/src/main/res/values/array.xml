@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="COM_PORT">
+        <item>COM1</item>
+        <item>COM2</item>
+        <item>COM3</item>
+        <item>COM4</item>
+        <item>COM5</item>
+        <item>COM6</item>
+        <item>COM7</item>
+        <item>COM8</item>
+        <item>COM9</item>
+    </string-array>
+    <string-array name="COM_SPEED">
+        <item>9600</item>
+        <item>14400</item>
+        <item>19200</item>
+        <item>38400</item>
+        <item>57600</item>
+        <item>115200</item>
+        <item>128000</item>
+    </string-array>
+    <string-array name="COM_FREQUENCY">
+        <item>10</item>
+    </string-array>
+
+</resources>

@@ -5,37 +5,47 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.tisotry.overimagine.samco_test_2.MainActivity;
 import com.tisotry.overimagine.samco_test_2.R;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 /**
  * Created by Horyeong Park on 2017-10-31.
- *
- *  connect, disconnect는 MainThread가 아닌 개별 스레드에서 동작하도록 수정해야함.
  */
 
-public class ConnectDrone {
-    private static final String TAG = "ConnectDrone";
+public class ConnectFCC {
+    private static final String TAG = "ConnectFCC";
 
     Context context;
 
-    public ConnectDrone(Context context) {
-        this.context = context;
-    }
+    // Menu Item from MainActrivity
+    private MenuItem menu_connect;
+    private MenuItem menu_disconnect;
+    private MenuItem menu_reconnect;
 
     // String port, speed, frequency;
     private String COM_PORT;
     private String COM_SPEED;
     private String COM_FREQUENCY;
 
+    public ConnectFCC(Context context) {
+        this.context = context;
+
+        menu_connect = ((MainActivity) context).nav_connect;
+        menu_disconnect = ((MainActivity) context).nav_disconnect;
+        menu_reconnect = ((MainActivity) context).nav_reconnect;
+    }
+
+
     // Connect Status
-    private boolean Drone;
+    private boolean isConnectedFCC;
 
     public void connectDialog() {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -87,10 +97,8 @@ public class ConnectDrone {
                 .setPositiveButton("연결", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-//                      connect(COM_PORT, COM_SPEED, COM_FREQUENCY);
-//                      Log.d(TAG, "Port : " + COM_PORT + ", Speed : " + COM_SPEED + ", Frequency : " + COM_FREQUENCY);
-
                         Toast.makeText(context, "Port : " + COM_PORT + ", Speed : " + COM_SPEED + ", Frequency : " + COM_FREQUENCY, Toast.LENGTH_SHORT).show();
+                        connect(COM_PORT, COM_PORT, COM_FREQUENCY);
                     }
                 })
                 .setNegativeButton("닫기", null).show();
@@ -110,25 +118,61 @@ public class ConnectDrone {
 
     }
 
-    private void connect(String port, String speed, String frequency) {
-        Drone = true;
-        Log.i(TAG, "Port : " + COM_PORT + ", Speed : " + COM_SPEED + ", Frequency : " + COM_FREQUENCY);
-        Log.i(TAG, "connect: Connected!");
-    }
-
-    private void disconnect() {
-        Drone = false;
-        Log.i(TAG, "disconnect: Disconnected!");
-    }
-
     public void reconnect() {
-        disconnect();
+        new AlertDialog.Builder(context)
+                .setMessage("현재 연결은 해제하고 다시 연결하시겠습니까?")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        disconnect();
 
-        connect(COM_PORT, COM_SPEED, COM_FREQUENCY);
+                        Toast.makeText(context, "5초 후에 다시 연결합니다.", Toast.LENGTH_SHORT).show();
+
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        connect(COM_PORT, COM_SPEED, COM_FREQUENCY);
+                    }
+                })
+                .setNegativeButton("취소", null)
+                .show();
     }
+
+    private boolean connect(String port, String speed, String frequency) {
+
+        isConnectedFCC = true;
+
+        Log.i(TAG, "Port : " + COM_PORT + ", Speed : " + COM_SPEED + ", Frequency : " + COM_FREQUENCY);
+        Log.i(TAG, "ic_nav_menu_connect: Connected!");
+
+        return getConnectStatus();
+    }
+
+    private boolean disconnect() {
+        isConnectedFCC = false;
+
+        Toast.makeText(context, "Disconnected!", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "disconnect: Disconnected!");
+
+        return getConnectStatus();
+    }
+
 
     public boolean getConnectStatus() {
-        return Drone;
+        if (isConnectedFCC) {
+            menu_connect.setVisible(false);
+            menu_disconnect.setVisible(true);
+            menu_reconnect.setVisible(true);
+        } else {
+            menu_connect.setVisible(true);
+            menu_disconnect.setVisible(false);
+            menu_reconnect.setVisible(false);
+        }
+
+        return isConnectedFCC;
     }
 
 

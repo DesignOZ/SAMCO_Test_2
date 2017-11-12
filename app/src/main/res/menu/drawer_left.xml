@@ -6,40 +6,34 @@
         <menu>
             <item
                 android:id="@+id/nav_connect"
-                android:icon="@drawable/connect"
+                android:icon="@drawable/ic_nav_menu_connect"
                 android:title="Connect" />
 
+            <item
+                android:id="@+id/nav_disconnect"
+                android:icon="@drawable/ic_nav_menu_disconnect"
+                android:title="Disconnect"
+                android:visible="false" />
+            <item
+                android:id="@+id/nav_reconnect"
+                android:icon="@drawable/ic_nav_menu_reconnect"
+                android:title="Reconnect"
+                android:visible="false" />
+
         </menu>
     </item>
 
-
-    <!--<group android:checkableBehavior="single">-->
-
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    <!--</group>-->
-
-    <item android:title="Communicate">
+    <item android:title="@string/file">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_save"
+                android:icon="@drawable/ic_nav_menu_save"
+                android:title="Save" />
+
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_load"
+                android:icon="@drawable/ic_nav_menu_load"
+                android:title="Load" />
         </menu>
     </item>
-
 </menu>

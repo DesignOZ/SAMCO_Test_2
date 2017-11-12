@@ -16,4 +16,9 @@
     <string name="disconnected">연결되지 않음</string>
     <string name="connect_stat">연결 상태</string>
     <string name="status">상태</string>
+    <string name="file">파일</string>
+    <string name="battery">배터리</string>
+
+    <!-- for Test-->
+    <string name="test_battery">50%</string>
 </resources>

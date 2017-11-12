@@ -7,7 +7,12 @@
             <item
                 android:id="@+id/bat_phone"
                 android:icon="@drawable/ic_bat_full"
-                android:title="Connect" />
+                android:title="Device" />
+
+            <item
+                android:id="@+id/bat_drone"
+                android:icon="@drawable/ic_bat_full"
+                android:title="Target" />
 
         </menu>
     </item>

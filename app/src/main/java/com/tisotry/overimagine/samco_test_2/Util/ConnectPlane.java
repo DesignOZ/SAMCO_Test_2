@@ -20,29 +20,19 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  * Created by Horyeong Park on 2017-10-31.
  */
 
-public class ConnectFCC {
-    private static final String TAG = "ConnectFCC";
+public class ConnectPlane {
+    private static final String TAG = "ConnectPlane";
 
     Context context;
-
-    // Menu Item from MainActrivity
-    private MenuItem menu_connect;
-    private MenuItem menu_disconnect;
-    private MenuItem menu_reconnect;
 
     // String port, speed, frequency;
     private String COM_PORT;
     private String COM_SPEED;
     private String COM_FREQUENCY;
 
-    public ConnectFCC(Context context) {
+    public ConnectPlane(Context context) {
         this.context = context;
-
-        menu_connect = ((MainActivity) context).nav_connect;
-        menu_disconnect = ((MainActivity) context).nav_disconnect;
-        menu_reconnect = ((MainActivity) context).nav_reconnect;
     }
-
 
     // Connect Status
     private boolean isConnectedFCC;
@@ -161,15 +151,15 @@ public class ConnectFCC {
     }
 
 
-    public boolean getConnectStatus() {
+    private boolean getConnectStatus() {
         if (isConnectedFCC) {
-            menu_connect.setVisible(false);
-            menu_disconnect.setVisible(true);
-            menu_reconnect.setVisible(true);
+            ((MainActivity) context).nav_connect.setVisible(false);
+            ((MainActivity) context).nav_disconnect.setVisible(true);
+            ((MainActivity) context).nav_reconnect.setVisible(true);
         } else {
-            menu_connect.setVisible(true);
-            menu_disconnect.setVisible(false);
-            menu_reconnect.setVisible(false);
+            ((MainActivity) context).nav_connect.setVisible(true);
+            ((MainActivity) context).nav_disconnect.setVisible(false);
+            ((MainActivity) context).nav_reconnect.setVisible(false);
         }
 
         return isConnectedFCC;

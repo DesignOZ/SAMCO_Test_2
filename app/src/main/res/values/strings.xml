@@ -19,6 +19,11 @@
     <string name="file">파일</string>
     <string name="battery">배터리</string>
 
+    <string name="monitor">Monitor</string>
+    <string name="plan">Plan</string>
+    <string name="setting">Setting</string>
+
     <!-- for Test-->
     <string name="test_battery">50%</string>
+
 </resources>

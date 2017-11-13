@@ -2,38 +2,49 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-    <item android:title="@string/connect_stat">
-        <menu>
-            <item
-                android:id="@+id/nav_connect"
-                android:icon="@drawable/ic_nav_menu_connect"
-                android:title="Connect" />
+    <item
+        android:id="@+id/nav_connect"
+        android:icon="@drawable/ic_nav_menu_connect"
+        android:title="Connect" />
 
-            <item
-                android:id="@+id/nav_disconnect"
-                android:icon="@drawable/ic_nav_menu_disconnect"
-                android:title="Disconnect"
-                android:visible="false" />
-            <item
-                android:id="@+id/nav_reconnect"
-                android:icon="@drawable/ic_nav_menu_reconnect"
-                android:title="Reconnect"
-                android:visible="false" />
+    <item
+        android:id="@+id/nav_disconnect"
+        android:icon="@drawable/ic_nav_menu_disconnect"
+        android:title="Disconnect"
+        android:visible="false" />
+    <item
+        android:id="@+id/nav_reconnect"
+        android:icon="@drawable/ic_nav_menu_reconnect"
+        android:title="Reconnect"
+        android:visible="false" />
 
-        </menu>
-    </item>
+    <item
+        android:id="@+id/nav_monitor"
+        android:icon="@drawable/ic_nav_menu_plane"
+        android:title="@string/monitor" />
 
-    <item android:title="@string/file">
-        <menu>
-            <item
-                android:id="@+id/nav_save"
-                android:icon="@drawable/ic_nav_menu_save"
-                android:title="Save" />
+    <item
+        android:id="@+id/nav_plan"
+        android:icon="@drawable/ic_nav_menu_plan"
+        android:title="@string/plan" />
 
-            <item
-                android:id="@+id/nav_load"
-                android:icon="@drawable/ic_nav_menu_load"
-                android:title="Load" />
-        </menu>
-    </item>
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@drawable/ic_nav_menu_setting"
+        android:title="@string/setting" />
+
+
+    <!--<item android:title="@string/file">-->
+    <!--<menu>-->
+    <!--<item-->
+    <!--android:id="@+id/nav_save"-->
+    <!--android:icon="@drawable/ic_nav_menu_save"-->
+    <!--android:title="Save" />-->
+
+    <!--<item-->
+    <!--android:id="@+id/nav_load"-->
+    <!--android:icon="@drawable/ic_nav_menu_load"-->
+    <!--android:title="Load" />-->
+    <!--</menu>-->
+    <!--</item>-->
 </menu>

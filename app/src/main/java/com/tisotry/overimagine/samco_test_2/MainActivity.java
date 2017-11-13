@@ -22,16 +22,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.tisotry.overimagine.samco_test_2.Util.ConnectFCC;
-import com.tisotry.overimagine.samco_test_2.Util.Status;
+import com.tisotry.overimagine.samco_test_2.Util.ConnectPlane;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     private static final String TAG = "MainActivity";
 
-    // ConnectFCC
-    private ConnectFCC mConnectDrone = new ConnectFCC(this);
+    // ConnectPlane
+    private ConnectPlane mConnectDrone = new ConnectPlane(this);
     //    private Status mStatus = new Status(this);
 
     // Drawer

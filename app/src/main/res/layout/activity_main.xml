@@ -19,16 +19,44 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_left"
+        android:paddingTop="41dp"
         app:menu="@menu/drawer_left" />
+
+    <!--app:headerLayout="@layout/nav_header_left"-->
+    <!--<android.support.design.widget.NavigationView-->
+    <!--android:id="@+id/nav_right"-->
+    <!--android:layout_width="200dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_gravity="end"-->
+    <!--android:fitsSystemWindows="true"-->
+    <!--android:paddingTop="41dp">-->
+    <!--&lt;!&ndash;app:menu="@menu/drawer_right"&ndash;&gt;-->
+
+    <!--<ListView-->
+    <!--android:id="@+id/main_list_mission"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--</ListView>-->
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_right"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:fitsSystemWindows="true"
-        app:menu="@menu/drawer_right" />
-    <!--app:headerLayout="@layout/nav_header_right"-->
+        app:headerLayout="@layout/nav_header_right"
+        android:paddingTop="41dp">
+        <!--app:menu="@menu/drawer_right"-->
+
+        <ExpandableListView
+            android:layout_marginTop="150dp"
+            android:id="@+id/main_list_mission"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ExpandableListView>
+
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

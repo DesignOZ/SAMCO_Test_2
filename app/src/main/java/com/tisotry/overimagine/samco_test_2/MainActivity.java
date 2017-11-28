@@ -13,6 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,16 +26,21 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.tisotry.overimagine.samco_test_2.Util.ConnectPlane;
+import com.tisotry.overimagine.samco_test_2.Util.ConnectFCC;
+import com.tisotry.overimagine.samco_test_2.Util.Mission;
+import com.tisotry.overimagine.samco_test_2.useless.MissionExpandableAdapter;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     private static final String TAG = "MainActivity";
 
-    // ConnectPlane
-    private ConnectPlane mConnectDrone = new ConnectPlane(this);
+    // ConnectFCC
+    private ConnectFCC mConnectDrone = new ConnectFCC(this);
     //    private Status mStatus = new Status(this);
+    private Mission mMission = new Mission(this);
 
     // Drawer
     DrawerLayout drawer;
@@ -58,6 +67,16 @@ public class MainActivity extends AppCompatActivity
     // Right Drawer
     MenuItem bat_device;
 
+    // ListView
+    private ListView list_mission;
+//    private ArrayList<String> array_mission = new ArrayList<>();                   // 상위 항목
+
+
+    private ExpandableListView explist_mission;
+    private ArrayList<String> array_mission = new ArrayList<>();                   // 상위 항목
+    private ArrayList<String> array_missionChild = new ArrayList<>();                   // 하위 항목
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,13 +98,13 @@ public class MainActivity extends AppCompatActivity
         NavigationView nav_Left = (NavigationView) findViewById(R.id.nav_left);
         nav_Left.setNavigationItemSelectedListener(this);
 
-        View nav_header_view = nav_Left.getHeaderView(0);
+        View nav_header_view_left = nav_Left.getHeaderView(0);
         Menu menu_left = nav_Left.getMenu();
 
 
         // header
-        header_left_battery_phone = (TextView) nav_header_view.findViewById(R.id.nav_left_battery_phone);
-        header_left_battery_fcc = (TextView) nav_header_view.findViewById(R.id.nav_left_battery_fcc);
+//        header_left_battery_phone = (TextView) nav_header_view.findViewById(R.id.nav_left_battery_phone);
+//        header_left_battery_fcc = (TextView) nav_header_view.findViewById(R.id.nav_left_battery_fcc);
 
         // menu
         nav_connect = menu_left.findItem(R.id.nav_connect);
@@ -95,6 +114,7 @@ public class MainActivity extends AppCompatActivity
         // Right NavigationView
         NavigationView nav_Right = (NavigationView) findViewById(R.id.nav_right);
         nav_Right.setNavigationItemSelectedListener(this);
+        View nav_header_view_right = nav_Right.getHeaderView(0);
         Menu menu_right = nav_Right.getMenu();
 
         bat_device = (MenuItem) menu_right.findItem(R.id.bat_phone);
@@ -102,6 +122,27 @@ public class MainActivity extends AppCompatActivity
         // Maps
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // ListView 선언
+        list_mission = (ListView) nav_header_view_right.findViewById(R.id.main_list_mission);
+        if (array_mission.isEmpty())
+            // 중복추가 방지
+            setArrayData();
+
+        list_mission.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, array_mission));
+
+        list_mission.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                mMission.MissionDialog();
+            }
+        });
+
+        explist_mission = (ExpandableListView) findViewById(R.id.main_list_mission);
+        if (array_mission.isEmpty())
+            // 중복추가 방지
+            setArrayData();
+        explist_mission.setAdapter(new MissionExpandableAdapter(this, array_mission, array_missionChild));
 
 
     }
@@ -147,7 +188,7 @@ public class MainActivity extends AppCompatActivity
                 mConnectDrone.disconnectDialog();
                 break;
             case R.id.nav_reconnect:
-                mConnectDrone.reconnect();
+                mConnectDrone.reconnectDialog();
                 break;
         }
 
@@ -165,5 +206,19 @@ public class MainActivity extends AppCompatActivity
         mMap.addMarker(new MarkerOptions().position(ikw).title("Gyeongwoon Univ"));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ikw, 16));
+    }
+
+    // ExpandableListView dummy data
+    private void setArrayData() {
+
+        // 제목
+        array_mission.add("PASS");
+        array_mission.add("Turn CW");
+        array_mission.add("Turn CCW");
+
+        // 내용
+        array_missionChild.add("dummy");
+        array_missionChild.add("dummy");
+        array_missionChild.add("dummy");
     }
 }

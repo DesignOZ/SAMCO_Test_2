@@ -20,8 +20,15 @@
         <item>115200</item>
         <item>128000</item>
     </string-array>
+
     <string-array name="COM_FREQUENCY">
         <item>10</item>
+    </string-array>
+
+    <string-array name="MARKER_TYPE">
+        <item>PASS</item>
+        <item>Turn CW</item>
+        <item>Turn CCW</item>
     </string-array>
 
 </resources>

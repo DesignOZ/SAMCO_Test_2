@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
@@ -20,31 +19,41 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  * Created by Horyeong Park on 2017-10-31.
  */
 
-public class ConnectPlane {
-    private static final String TAG = "ConnectPlane";
+public class ConnectFCC {
+    private static final String TAG = "ConnectFCC";
+    private Context context;
 
-    Context context;
-
-    // String port, speed, frequency;
-    private String COM_PORT;
-    private String COM_SPEED;
-    private String COM_FREQUENCY;
-
-    public ConnectPlane(Context context) {
+    public ConnectFCC(Context context) {
         this.context = context;
     }
 
-    // Connect Status
+    //          String
+    //          FCC에 연결하기위한 포트, 속도, 클럭을 담는 역할.
+    //          connectDialog 함수의 Spinner를 통해 정보를 담는다.
+    //          초기값은 null
+    private String COM_PORT = null;
+    private String COM_SPEED = null;
+    private String COM_FREQUENCY = null;
+
+    //          boolean
+    //          현재 연결상태을 담고있다.
+    //          초기값은 false
     private boolean isConnectedFCC;
 
+    //          FCC에 연결하기 위해 다이얼로그를 생성한다.
     public void connectDialog() {
+
+        //      View
+        //      내용을 Message (String)으로 넣지 않고, 레이아웃 뷰를 넣는다.
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View connectDialogView = inflater.inflate(R.layout.dialog_connect, null);
+        View view = inflater.inflate(R.layout.dialog_connect, null);
 
-        Spinner sCOM_PORT = connectDialogView.findViewById(R.id.connect_spinner_port);
-        Spinner sCOM_SPEED = connectDialogView.findViewById(R.id.connect_spinner_speed);
-        Spinner sCOM_FREQUENCY = connectDialogView.findViewById(R.id.connect_spinner_frequency);
+        //      Spinner
+        Spinner sCOM_PORT = view.findViewById(R.id.connect_spinner_port);
+        Spinner sCOM_SPEED = view.findViewById(R.id.connect_spinner_speed);
+        Spinner sCOM_FREQUENCY = view.findViewById(R.id.connect_spinner_frequency);
 
+        //      Spinner.setOnItemSelectedListener
         sCOM_PORT.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -82,18 +91,44 @@ public class ConnectPlane {
             }
         });
 
+        //      AlertDialog.Build
+        //      PositiveButton ("연결")을 누르면 connect 함수를 호출한다. (param : (String) COM_PORT, (String) COM_SPEED, (String) COM_FREQUENCY)
+        //      에러 발생시 ErrorDialog 호출
         new AlertDialog.Builder(context)
-                .setView(connectDialogView)
+                .setView(view)
                 .setPositiveButton("연결", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(context, "Port : " + COM_PORT + ", Speed : " + COM_SPEED + ", Frequency : " + COM_FREQUENCY, Toast.LENGTH_SHORT).show();
-                        connect(COM_PORT, COM_PORT, COM_FREQUENCY);
+                        try {
+                            connect(COM_PORT, COM_SPEED, COM_FREQUENCY);
+                        } catch (Exception e) {
+                            ErrorDialog();
+                        }
+
                     }
                 })
                 .setNegativeButton("닫기", null).show();
     }
 
+    //          ErrorDialog
+    //          오류 메시지를 띄우고 PositiveButton을 누르면 다시 connectDialog를 호출한다.
+    private void ErrorDialog() {
+        new AlertDialog.Builder(context)
+                .setTitle("오류")
+                .setMessage("오류가 발생했습니다"
+                        + "설정을 다시 확인하십시오")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        connectDialog();
+                    }
+                })
+                .show();
+    }
+
+    //          disconnectDialog
+    //          FCC와의 연결을 해제하기위한 다이얼로그.
     public void disconnectDialog() {
         new AlertDialog.Builder(context)
                 .setMessage("연결을 해제하시겠습니까?")
@@ -108,7 +143,11 @@ public class ConnectPlane {
 
     }
 
-    public void reconnect() {
+
+    //          reconnectDialog
+    //          FCC와의 연결이 이상하거나 값이 제대로 전달받지 못할 경우 점검을 위해
+    //          재연결하기위한 다이얼로그
+    public void reconnectDialog() {
         new AlertDialog.Builder(context)
                 .setMessage("현재 연결은 해제하고 다시 연결하시겠습니까?")
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -131,27 +170,33 @@ public class ConnectPlane {
                 .show();
     }
 
-    private boolean connect(String port, String speed, String frequency) {
+    private void connect(String port, String speed, String frequency) {
 
         isConnectedFCC = true;
 
-        Log.i(TAG, "Port : " + COM_PORT + ", Speed : " + COM_SPEED + ", Frequency : " + COM_FREQUENCY);
-        Log.i(TAG, "ic_nav_menu_connect: Connected!");
+        Log.i(TAG, "Port : " + port + ", Speed : " + speed + ", Frequency : " + frequency);
+        Log.i(TAG, "connect: Connected!");
 
-        return getConnectStatus();
+        setConnectStatus();
     }
 
-    private boolean disconnect() {
+    private void disconnect() {
         isConnectedFCC = false;
 
         Toast.makeText(context, "Disconnected!", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "disconnect: Disconnected!");
 
-        return getConnectStatus();
+        setConnectStatus();
     }
 
-
-    private boolean getConnectStatus() {
+//              setConnectStatus
+//              Navigation Drawer의 메뉴 부분을 수정한다.
+//              - FCC와 연결이 되지 않은 상태 (isConnectedFCC == false, 기본값)
+//                  Connect
+//              - FCC와 연결이 된 상태 (isConnectedFCC == true)
+//                  Disconnect
+//                  Reconnect
+    private void setConnectStatus() {
         if (isConnectedFCC) {
             ((MainActivity) context).nav_connect.setVisible(false);
             ((MainActivity) context).nav_disconnect.setVisible(true);
@@ -161,10 +206,6 @@ public class ConnectPlane {
             ((MainActivity) context).nav_disconnect.setVisible(false);
             ((MainActivity) context).nav_reconnect.setVisible(false);
         }
-
-        return isConnectedFCC;
     }
-
-
 }
 

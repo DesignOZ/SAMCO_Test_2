@@ -17,4 +17,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@color/wBackground</item>
+    </style>
 </resources>

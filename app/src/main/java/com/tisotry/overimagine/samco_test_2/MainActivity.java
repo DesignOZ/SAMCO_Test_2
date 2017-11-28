@@ -1,6 +1,7 @@
 package com.tisotry.overimagine.samco_test_2;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -26,7 +27,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.tisotry.overimagine.samco_test_2.Util.ConnectFCC;
+import com.tisotry.overimagine.samco_test_2.FCC.Connect;
 import com.tisotry.overimagine.samco_test_2.Util.Mission;
 import com.tisotry.overimagine.samco_test_2.useless.MissionExpandableAdapter;
 
@@ -37,8 +38,8 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
 
-    // ConnectFCC
-    private ConnectFCC mConnectDrone = new ConnectFCC(this);
+    // Connect
+    private Connect mConnectDrone = new Connect(this);
     //    private Status mStatus = new Status(this);
     private Mission mMission = new Mission(this);
 
@@ -101,11 +102,6 @@ public class MainActivity extends AppCompatActivity
         View nav_header_view_left = nav_Left.getHeaderView(0);
         Menu menu_left = nav_Left.getMenu();
 
-
-        // header
-//        header_left_battery_phone = (TextView) nav_header_view.findViewById(R.id.nav_left_battery_phone);
-//        header_left_battery_fcc = (TextView) nav_header_view.findViewById(R.id.nav_left_battery_fcc);
-
         // menu
         nav_connect = menu_left.findItem(R.id.nav_connect);
         nav_disconnect = menu_left.findItem(R.id.nav_disconnect);
@@ -134,15 +130,15 @@ public class MainActivity extends AppCompatActivity
         list_mission.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mMission.MissionDialog();
+                mMission.EditDialog();
             }
         });
-
-        explist_mission = (ExpandableListView) findViewById(R.id.main_list_mission);
-        if (array_mission.isEmpty())
-            // 중복추가 방지
-            setArrayData();
-        explist_mission.setAdapter(new MissionExpandableAdapter(this, array_mission, array_missionChild));
+//
+//        explist_mission = (ExpandableListView) findViewById(R.id.main_list_mission);
+//        if (array_mission.isEmpty())
+//            // 중복추가 방지
+//            setArrayData();
+//        explist_mission.setAdapter(new MissionExpandableAdapter(this, array_mission, array_missionChild));
 
 
     }
@@ -165,7 +161,6 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
             drawer.closeDrawer(GravityCompat.END);
         } else {
-//            super.onBackPressed();
             if (!checkExit) {
                 Toast.makeText(this, "한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
                 checkExit = true;
@@ -189,6 +184,11 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_reconnect:
                 mConnectDrone.reconnectDialog();
+                break;
+
+            case R.id.nav_setting:
+                this.startActivity(new Intent(this, SettingActivity.class));
+//                this.startActivity(new Intent(this, DummyActivity.class));
                 break;
         }
 

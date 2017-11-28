@@ -1,4 +1,4 @@
-package com.tisotry.overimagine.samco_test_2.Util;
+package com.tisotry.overimagine.samco_test_2.FCC;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,11 +19,11 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  * Created by Horyeong Park on 2017-10-31.
  */
 
-public class ConnectFCC {
-    private static final String TAG = "ConnectFCC";
+public class Connect {
+    private static final String TAG = "Connect";
     private Context context;
 
-    public ConnectFCC(Context context) {
+    public Connect(Context context) {
         this.context = context;
     }
 
@@ -177,7 +177,7 @@ public class ConnectFCC {
         Log.i(TAG, "Port : " + port + ", Speed : " + speed + ", Frequency : " + frequency);
         Log.i(TAG, "connect: Connected!");
 
-        setConnectStatus();
+        replaceConnectMenu();
     }
 
     private void disconnect() {
@@ -186,17 +186,17 @@ public class ConnectFCC {
         Toast.makeText(context, "Disconnected!", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "disconnect: Disconnected!");
 
-        setConnectStatus();
+        replaceConnectMenu();
     }
 
-//              setConnectStatus
-//              Navigation Drawer의 메뉴 부분을 수정한다.
-//              - FCC와 연결이 되지 않은 상태 (isConnectedFCC == false, 기본값)
-//                  Connect
-//              - FCC와 연결이 된 상태 (isConnectedFCC == true)
-//                  Disconnect
-//                  Reconnect
-    private void setConnectStatus() {
+    //          replaceConnectMenu
+    //          Navigation Drawer의 메뉴 부분을 수정한다.
+    //          - FCC와 연결이 되지 않은 상태 (isConnectedFCC == false, 기본값)
+    //              Connect
+    //          - FCC와 연결이 된 상태 (isConnectedFCC == true)
+    //              Disconnect
+    //              Reconnect
+    private void replaceConnectMenu() {
         if (isConnectedFCC) {
             ((MainActivity) context).nav_connect.setVisible(false);
             ((MainActivity) context).nav_disconnect.setVisible(true);
@@ -206,6 +206,10 @@ public class ConnectFCC {
             ((MainActivity) context).nav_disconnect.setVisible(false);
             ((MainActivity) context).nav_reconnect.setVisible(false);
         }
+    }
+
+    public boolean getConnectStatus ()  {
+        return isConnectedFCC;
     }
 }
 

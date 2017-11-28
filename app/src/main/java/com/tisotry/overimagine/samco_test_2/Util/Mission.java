@@ -26,7 +26,7 @@ public class Mission {
         mContext = context;
     }
 
-    public void MissionDialog() {
+    public void EditDialog() {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
         View missionDialogView = inflater.inflate(R.layout.dialog_edit_mission, null);
 
@@ -47,17 +47,6 @@ public class Mission {
 
             }
         });
-//        sCOM_PORT.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
 
         new AlertDialog.Builder(mContext)
                 .setView(missionDialogView)

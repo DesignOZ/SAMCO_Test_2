@@ -1,0 +1,15 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="pref_clear"
+        android:summary="@string/pref_clear_summary"
+        android:title="@string/pref_clear_title" />
+
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/BATTERY_WARNING_ENTRY"
+        android:entryValues="@array/BATTERY_WARNING_VALUE"
+        android:key="pref_warningValue"
+        android:title="@string/pref_battery_title" />
+
+</PreferenceScreen>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- for Connect Dialog-->
     <string-array name="COM_PORT">
         <item>COM1</item>
         <item>COM2</item>
@@ -29,6 +30,19 @@
         <item>PASS</item>
         <item>Turn CW</item>
         <item>Turn CCW</item>
+    </string-array>
+
+    <!-- for SettingActivity -->
+    <string-array name="BATTERY_WARNING_ENTRY">
+        <item>50%</item>
+        <item>25%</item>
+        <item>15%</item>
+    </string-array>
+
+    <string-array name="BATTERY_WARNING_VALUE">
+        <item>50</item>
+        <item>25</item>
+        <item>15</item>
     </string-array>
 
 </resources>

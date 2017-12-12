@@ -2,6 +2,7 @@ package com.tisotry.overimagine.samco_test_2;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,26 +15,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.tisotry.overimagine.samco_test_2.FCC.Connect;
 import com.tisotry.overimagine.samco_test_2.Mission.EditMission;
-import com.tisotry.overimagine.samco_test_2.Mission.Mission;
-import com.tisotry.overimagine.samco_test_2.Mission.MissionListAdapter;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+        implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, OnMapClickListener, OnMapLongClickListener {
 
     private static final String TAG = "MainActivity";
 
@@ -47,6 +48,11 @@ public class MainActivity extends AppCompatActivity
 
     // Maps
     private GoogleMap mMap;
+
+    // Maps - polyline
+    private PolylineOptions polylineOptions;
+    private ArrayList<LatLng> arrayPoints;
+
 
     // TextView
     public TextView txt_phone_battery;
@@ -177,7 +183,36 @@ public class MainActivity extends AppCompatActivity
         // Add a marker in Sydney and move the camera
         LatLng ikw = new LatLng(36.1694533, 128.4678934);
         mMap.addMarker(new MarkerOptions().position(ikw).title("Gyeongwoon Univ"));
-
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ikw, 16));
+
+        //클릭 리스너
+        mMap.setOnMapClickListener(this);
+        //롱 클릭 리스너
+        mMap.setOnMapLongClickListener(this);
+
+        arrayPoints = new ArrayList<LatLng>();
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        //맵클릭시 마커 추가
+        MarkerOptions marker = new MarkerOptions();
+        marker.position(latLng);
+        mMap.addMarker(marker);
+
+        // 경로를 그리는 코드
+        polylineOptions = new PolylineOptions();
+        polylineOptions.color(Color.RED);
+        polylineOptions.width(5);
+        arrayPoints.add(latLng);
+        polylineOptions.addAll(arrayPoints);
+        mMap.addPolyline(polylineOptions);
+    }
+
+    @Override
+    public void onMapLongClick(LatLng latLng) {
+        //마커 전체 삭제
+        mMap.clear();
+        arrayPoints.clear();
     }
 }

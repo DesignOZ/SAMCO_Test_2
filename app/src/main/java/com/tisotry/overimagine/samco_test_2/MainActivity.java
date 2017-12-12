@@ -28,8 +28,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.tisotry.overimagine.samco_test_2.FCC.Connect;
-import com.tisotry.overimagine.samco_test_2.Util.Mission;
-import com.tisotry.overimagine.samco_test_2.useless.MissionExpandableAdapter;
+import com.tisotry.overimagine.samco_test_2.Util.EditMission;
 
 import java.util.ArrayList;
 
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity
     // Connect
     private Connect mConnectDrone = new Connect(this);
     //    private Status mStatus = new Status(this);
-    private Mission mMission = new Mission(this);
+    private EditMission mEditMission = new EditMission(this);
 
     // Drawer
     DrawerLayout drawer;
@@ -130,17 +129,9 @@ public class MainActivity extends AppCompatActivity
         list_mission.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mMission.EditDialog();
+                mEditMission.EditDialog();
             }
         });
-//
-//        explist_mission = (ExpandableListView) findViewById(R.id.main_list_mission);
-//        if (array_mission.isEmpty())
-//            // 중복추가 방지
-//            setArrayData();
-//        explist_mission.setAdapter(new MissionExpandableAdapter(this, array_mission, array_missionChild));
-
-
     }
 
     // 뒤로가기 2번 눌러 종료

@@ -19,10 +19,10 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
  * Created by Horyeong Park on 2017-11-15.
  */
 
-public class Mission {
+public class EditMission {
     Context mContext;
 
-    public Mission(Context context) {
+    public EditMission(Context context) {
         mContext = context;
     }
 

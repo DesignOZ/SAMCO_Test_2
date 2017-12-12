@@ -32,7 +32,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        tools:context="com.tisotry.overimagine.samco_test_2.Util.MapsActivity" />
+        tools:context=".FCC.Util.MapsActivity" />
 
     <include
         layout="@layout/include_status_monitor"

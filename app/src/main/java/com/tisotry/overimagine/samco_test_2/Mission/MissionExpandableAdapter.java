@@ -1,4 +1,4 @@
-package com.tisotry.overimagine.samco_test_2.useless;
+package com.tisotry.overimagine.samco_test_2.Mission;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -77,7 +77,7 @@ public class MissionExpandableAdapter extends BaseExpandableListAdapter {
 
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(R.layout.listview_mission_group, null);
+            v = inflater.inflate(R.layout.exlistview_mission_group, null);
         }
         TextView textGroup = (TextView) v.findViewById(R.id.textGroup);
         textGroup.setText(title);
@@ -92,7 +92,7 @@ public class MissionExpandableAdapter extends BaseExpandableListAdapter {
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.listview_mission_child, null);
+            view = inflater.inflate(R.layout.exlistview_mission_child, null);
         }
 
         final LinearLayout layout = (LinearLayout) view.findViewById(R.id.layout_is_cw_ccw);

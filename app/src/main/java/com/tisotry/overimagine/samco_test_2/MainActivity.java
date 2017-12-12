@@ -15,8 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +26,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.tisotry.overimagine.samco_test_2.FCC.Connect;
-import com.tisotry.overimagine.samco_test_2.Util.EditMission;
+import com.tisotry.overimagine.samco_test_2.Mission.EditMission;
+import com.tisotry.overimagine.samco_test_2.Mission.Mission;
+import com.tisotry.overimagine.samco_test_2.Mission.MissionListAdapter;
 
 import java.util.ArrayList;
 
@@ -69,13 +69,6 @@ public class MainActivity extends AppCompatActivity
 
     // ListView
     private ListView list_mission;
-//    private ArrayList<String> array_mission = new ArrayList<>();                   // 상위 항목
-
-
-    private ExpandableListView explist_mission;
-    private ArrayList<String> array_mission = new ArrayList<>();                   // 상위 항목
-    private ArrayList<String> array_missionChild = new ArrayList<>();                   // 하위 항목
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,18 +113,6 @@ public class MainActivity extends AppCompatActivity
 
         // ListView 선언
         list_mission = (ListView) nav_header_view_right.findViewById(R.id.main_list_mission);
-        if (array_mission.isEmpty())
-            // 중복추가 방지
-            setArrayData();
-
-        list_mission.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, array_mission));
-
-        list_mission.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                mEditMission.EditDialog();
-            }
-        });
     }
 
     // 뒤로가기 2번 눌러 종료
@@ -167,19 +148,20 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
             case R.id.nav_connect:
-                mConnectDrone.connectDialog();
-
+                // mConnectDrone.connectDialog();
+                this.startActivity(new Intent(this, DeviceListActivity.class));
                 break;
+
             case R.id.nav_disconnect:
                 mConnectDrone.disconnectDialog();
                 break;
+
             case R.id.nav_reconnect:
                 mConnectDrone.reconnectDialog();
                 break;
 
             case R.id.nav_setting:
                 this.startActivity(new Intent(this, SettingActivity.class));
-//                this.startActivity(new Intent(this, DummyActivity.class));
                 break;
         }
 
@@ -197,19 +179,5 @@ public class MainActivity extends AppCompatActivity
         mMap.addMarker(new MarkerOptions().position(ikw).title("Gyeongwoon Univ"));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ikw, 16));
-    }
-
-    // ExpandableListView dummy data
-    private void setArrayData() {
-
-        // 제목
-        array_mission.add("PASS");
-        array_mission.add("Turn CW");
-        array_mission.add("Turn CCW");
-
-        // 내용
-        array_missionChild.add("dummy");
-        array_missionChild.add("dummy");
-        array_missionChild.add("dummy");
     }
 }

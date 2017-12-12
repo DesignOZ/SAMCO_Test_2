@@ -1,0 +1,45 @@
+- C#에서 이벤트 받고 처리하는 과정 -
+
+1. delegate 로 선언한 함수와 이벤트 타입의 객체가 필요
+
+public delegate void EventHandler();
+
+public event EventHandler(= 델리게이트 이름) myevent;
+
+2. 다음 이벤트에다가 해당 델리게이트를 붙어야됨.
+
+p.MyEvent += new Event.EventHandler(doaction);
+
+-> 이때 델리게이트 인자에다가 이벤트 발생시 호출할 함수를 지정
+
+3. 이벤트가 핸들러와 붙어 있다면 myevent(); 로 이벤트를 발생시킴
+
+4. 호출된 함수에서 원하는 기능작동.
+
+
+
+-- System.EventHandler 이용하기 --
+
+이 클래스는 이벤트를 위한 델리게이트로 이벤트 발생시 전달할 데이터가 없는 경우에 주로 사용한다.
+
+public delegate void EventHandler(Object sender, EventArgs e)
+
+sender : 이벤트가 발생한 객체
+e: 이벤트 발생시 전달할 데이터, 만약 전달할 데이터가 있는 경우 EventArgs 클래스를 상속하여 정의한다.
+
+이 경우 이벤트를 발생시킬때, MyEvent(null, null); 이런식으로 각각 인자를 주어야한다.
+
+그리고 doaction 역시 
+static void doAction(object sender, EventArgs e)
+{
+
+} -> 이렇게 인자를 주어야한다.
+
+1. NotifyPacketReceived 가 호출되면 PacketReceived 이벤트를 발생시킨다.
+
+1. PacketReceived 이벤트가 발생하면 HandlePacketReceived 핸들러가 작동한다.
+
+2. HandlePacketReceived 는 OnPacketReceived 이벤트를 발생 시킴.
+
+대리님 UVLinkAsyncWalker에 PacketProcessingWorker가 무한 반복하면서 패킷이 유효한지 확인후 유효하다면 NotifyPacketReceived() 함수를 호출하는데 이 함수는 PacketReived 이벤트를 발생시키게 되고 PacketReceived 이벤트가 발생하면 HandlePacketReceived 핸들러가 작동해서 OnPacketReceived 이벤트를 발생시키는걸로 이해했습니다만 맞는지가 궁금합니다.
+또한 OnPacketReceived 이벤트가 발생하면 받게되는 핸들러를 제가 찾지 못했는데 어떤 역할을 하는 패킷인지 궁금합니다.

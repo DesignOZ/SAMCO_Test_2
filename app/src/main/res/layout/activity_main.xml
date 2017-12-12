@@ -42,6 +42,11 @@
 
         <!--</ExpandableListView>-->
 
+        <ListView
+            android:id="@+id/main_list_mission"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

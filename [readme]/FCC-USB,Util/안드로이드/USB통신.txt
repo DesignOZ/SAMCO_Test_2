@@ -1,0 +1,20 @@
+Usb Host 통신 방식
+
+UsbManager -> UsbDevice -> UsbInterface -> UsbDeviceConnection -> UsbEndpoint
+
+----------------
+
+Usb Host Serial 통신
+
+DeviceListActivity(사용자가 사용하는 액티비티)
+: UsbManager 보유
+
+Driver
+: UsbDevice 보유, UsbDevice 내장한 Port 생성및 보유, 여러개의 Port를 가짐
+
+Port
+: UsbDevice 보유, UsbConnection 보유-> UsbInterface 보유-> UsbEndpoint 보유 
+기능: open(), close(), read(), write()
+
+UsbConnection에서 보레이트 설정
+
